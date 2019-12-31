@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>738</width>
-    <height>464</height>
+    <width>1100</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -77,14 +77,14 @@
      <rect>
       <x>170</x>
       <y>10</y>
-      <width>531</width>
-      <height>381</height>
+      <width>891</width>
+      <height>601</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Courier 10 Pitch</family>
-      <pointsize>15</pointsize>
+      <pointsize>18</pointsize>
       <weight>75</weight>
       <italic>true</italic>
       <bold>true</bold>
@@ -122,8 +122,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>738</width>
-     <height>28</height>
+     <width>1100</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAssignment_01">

@@ -13,14 +13,17 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    void bresenhamsAlgorithm(int,int,int,int);
-    void ddaAlgorithm(int,int,int,int);
+    void bresenhamsAlgorithm();
     ~MainWindow();
 
 private slots:
     void on_textEdit_textChanged();
 
     void on_textEdit_2_textChanged();
+
+    void on_textEdit_3_textChanged();
+
+    void on_textEdit_4_textChanged();
 
     void on_pushButton_clicked();
 
