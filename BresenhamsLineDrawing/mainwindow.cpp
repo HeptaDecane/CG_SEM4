@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "QString"
 #include "iostream"
+//#include "bits/stdc++.h"
 using namespace std;
 /*Global Variables*/
 int x1,y1;
@@ -49,40 +50,33 @@ void MainWindow::bresenhamsAlgorithm(){
     int dy=y2-y1;
     int x=x1;
     int y=y1;
-    if(abs(dx)>abs(dy)){
-        //int pk=2*abs(dy)-abs(dx);
-        int pk=2*dy-dx;
-        for(int i=0;i<abs(dx);i++){
-            image.setPixel(x,y,green);
-            x++;
-            if(pk<0)
-                //pk=pk+2*abs(dy);
-                pk=pk+2*dy;
-            else{
-                y++;
-                //pk=pk+2*abs(dy)-2*abs(dx);
-                pk=pk+2*dy-2*dx;
-            }
-        }
+    bool swapped=false;
+    int sx=x2>x1?1:(-1);
+    int sy=y2>y1?1:(-1);
+    if(abs(dx)<abs(dy)){ //if slope>m
+        swap(dx,dy);
+        swap(x,y);
+        swap(sx,sy);
+        swapped=true;
     }
-    else{
-        //int pk=2*abs(dx)-abs(dy);
-        int pk=2*dx-dy;
-        for(int i=0;i<abs(dy);i++){
+    int pk=2*abs(dy)-abs(dx);
+    for(int i=0;i<abs(dx);i++){
+        if(swapped)
+            image.setPixel(y,x,green);
+        else
             image.setPixel(x,y,green);
-            y++;
-            if(pk<0)
-                //pk=pk+2*abs(dx);
-                pk=pk+2*dx;
-            else{
-                x++;
-                //pk=pk+2*abs(dx)-2*abs(dy);
-                pk=pk+2*dx-2*dy;
-            }
+        cout<<x<<","<<y<<"\n";
+        x+=sx;
+        if(pk<0)
+            pk=pk+2*abs(dy);
+        else{
+            y+=sy;
+            pk=pk+2*abs(dy)-2*abs(dx);
         }
     }
     return;
 }
+
 void MainWindow::on_pushButton_clicked()
 {
     bresenhamsAlgorithm();
