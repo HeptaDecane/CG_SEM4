@@ -13,6 +13,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void DDA(int,int,int,int);
     ~MainWindow();
 
 private slots:
@@ -31,6 +32,8 @@ private slots:
     void on_pushButton_4_clicked();
 
     void on_pushButton_3_clicked();
+
+    void on_textEdit_5_textChanged();
 
 private:
     Ui::MainWindow *ui;

@@ -5,7 +5,8 @@ using namespace std;
 /*Global Variables*/
 int x1,y1;
 int x2,y2;
-QImage image(571,381,QImage::Format_RGB888);
+int w=2;
+QImage image(811,561,QImage::Format_RGB888);
 QRgb green=qRgb(0,255,0);
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -42,11 +43,38 @@ void MainWindow::on_textEdit_4_textChanged()
     y2=str.toInt();
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_textEdit_5_textChanged()
 {
-    //Thick Line
+    QString str=ui->textEdit_5->toPlainText();
+    w=str.toInt();
+}
+void MainWindow::DDA(int x1, int y1, int x2, int y2){
+    float dx,dy,steps,xinc,yinc;
+    dx=x2-x1;
+    dy=y2-y1;
+
+    steps=abs(dx)>abs(dy)?abs(dx):abs(dy);
+    xinc=dx/steps;
+    yinc=dy/steps;
+
+    float x=x1;
+    float y=y1;
+
+    for(int i=0;i<=steps;i++){
+        image.setPixel(x,y,green);
+        x=x+xinc;
+        y=y+yinc;
+    }
     ui->label_5->setPixmap(QPixmap::fromImage(image));
     ui->label_5->show();
+}
+void MainWindow::on_pushButton_clicked()
+{
+    int wy=(w-1)/2;
+    for(int i=0;i<=wy;i++){
+        DDA(x1,y1-i,x2,y2-i);
+        DDA(x1,y1+i,x2,y2+i);
+    }
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -108,10 +136,8 @@ void MainWindow::on_pushButton_3_clicked()
      float y=y1;
 
      for(int i=0;i<=steps;i++){
-         if(i%10<5)
+         if(i%16<=7||i%16==11||i%16==12)
             image.setPixel(x,y,green);
-         if(i%10==7)
-             image.setPixel(x,y,green);
          x=x+xinc;
          y=y+yinc;
      }
@@ -119,3 +145,4 @@ void MainWindow::on_pushButton_3_clicked()
     ui->label_5->setPixmap(QPixmap::fromImage(image));
     ui->label_5->show();
 }
+
