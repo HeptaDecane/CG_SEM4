@@ -13,8 +13,10 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    void bresenhamCircle();
+    void bresenhamCircle(int);
     void drawCircle(int,int);
+    void drawTriangle();
+    void DDALine(int,int,int,int);
     ~MainWindow();
 
 private slots:
