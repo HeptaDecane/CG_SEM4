@@ -71,10 +71,19 @@ void MainWindow::DDA(int x1, int y1, int x2, int y2){
 void MainWindow::on_pushButton_clicked()
 {
     int wy=(w-1)/2;
-    for(int i=0;i<=wy;i++){
-        DDA(x1,y1-i,x2,y2-i);
-        DDA(x1,y1+i,x2,y2+i);
-    }
+    int slope;
+    if(x2-x1)
+        slope=abs((y2-y1)/(x2-x1));
+    if(slope>1||x2-x1==0)
+        for(int i=0;i<=wy;i++){
+            DDA(x1-i,y1,x2-i,y2);
+            DDA(x1+i,y1,x2+i,y2);
+        }
+    else
+        for(int i=0;i<=wy;i++){
+            DDA(x1,y1-i,x2,y2-i);
+            DDA(x1,y1+i,x2,y2+i);
+        }
 }
 
 void MainWindow::on_pushButton_2_clicked()
