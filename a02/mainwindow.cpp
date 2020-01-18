@@ -1,8 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "cmath"
 int radius;
-int xc=260,yc=190;
-QImage image(521,381,QImage::Format_RGB888);
+int xc=430,yc=280;
+QImage image(861,561,QImage::Format_RGB888);
 QRgb green=qRgb(0,255,0);
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -38,6 +39,30 @@ void MainWindow::drawCircle(int x,int y){
     image.setPixel(xc,yc,green);
     ui->label->setPixmap(QPixmap::fromImage(image));
     ui->label->show();
+}
+void MainWindow::DDACircle(int r){
+    float xc1,xc2,yc1,yc2,eps,sx,sy;
+    int val,i;
+     xc1=r;
+     yc1=0;
+     sx=xc1;
+     sy=yc1;
+     i=0;
+     do{
+         val=pow(2,i);
+         i++;
+         }while(val<r);
+     eps = 1/pow(2,i-1);
+     do{
+         xc2 = xc1 + yc1*eps;
+         yc2 = yc1 - eps*xc2;
+         image.setPixel(xc+xc2,yc-yc2,green);
+         xc1=xc2;
+         yc1=yc2;
+        }while((yc1-sy)<eps || (sx-xc1)>eps);
+     image.setPixel(xc,yc,green);
+     ui->label->setPixmap(QPixmap::fromImage(image));
+     ui->label->show();
 }
 void MainWindow::drawTriangle(){
     int x1=xc+0;
@@ -86,5 +111,5 @@ void MainWindow::on_pushButton_clicked()
 {
     bresenhamCircle(radius);
     drawTriangle();
-    bresenhamCircle(radius/2);
+    DDACircle(radius/2);
 }
