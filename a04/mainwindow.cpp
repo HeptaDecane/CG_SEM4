@@ -31,10 +31,10 @@ void MainWindow::mousePressEvent(QMouseEvent *events){
     if(i<vertices){
         x=events->pos().x();
         y=events->pos().y();
-        if(x>=5&&x<=915&&y>=5&&y<=585){
-            coordinates[i][0]=x;
-            coordinates[i][1]=y;
-            plotPoint(x,y);
+        if(x>=15&&x<=925&&y>=32&&y<=613){
+            coordinates[i][0]=x-10;
+            coordinates[i][1]=y-30;
+            plotPoint(x-10,y-30);
             i++;
         }
     }

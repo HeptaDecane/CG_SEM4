@@ -36,7 +36,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    int coordinates[20][2];
+    int coordinates[100][2];
     int vertices;
     bool start;
 };

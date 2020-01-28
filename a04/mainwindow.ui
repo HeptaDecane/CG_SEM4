@@ -23,6 +23,12 @@
       <height>591</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>CrossCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
     <property name="frameShape">
      <enum>QFrame::Box</enum>
     </property>
