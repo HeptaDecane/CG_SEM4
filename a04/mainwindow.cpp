@@ -1,13 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "QColorDialog"
-#include "iostream"
-using namespace std;
 
-QImage image(541,381,QImage::Format_RGB888);
+/********Global Variables********/
+QImage image(921,591,QImage::Format_RGB888);
 QImage pallete(71,31,QImage::Format_RGB888);
-QColor color;
-QRgb green=qRgb(0,255,0);
+QRgb white=qRgb(255,255,255);
+QRgb color=white;
 int i=0,x1,y1,x2,y2,r,g,b;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -15,7 +13,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    pallete.fill(color);
     ui->label->setPixmap(QPixmap::fromImage(image));
+    ui->label_3->setPixmap(QPixmap::fromImage(pallete));
     vertices=0;
     start=false;
 }
@@ -30,26 +31,20 @@ void MainWindow::mousePressEvent(QMouseEvent *events){
     if(i<vertices){
         x=events->pos().x();
         y=events->pos().y();
-
-        coordinates[i][0]=x;
-        coordinates[i][1]=y;
-        cout<<x<<" "<<y<<"\n";
-        image.setPixel(x,y,green);
-        i++;
+        if(x>=5&&x<=915&&y>=5&&y<=585){
+            coordinates[i][0]=x;
+            coordinates[i][1]=y;
+            plotPoint(x,y);
+            i++;
+        }
     }
-    ui->label->setPixmap(QPixmap::fromImage(image));
-    ui->label->show();
 }
 void MainWindow::on_plainTextEdit_textChanged()
 {
     QString str=ui->plainTextEdit->toPlainText();
     vertices=str.toInt();
     start=true;
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-
+    i=0;
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -78,7 +73,7 @@ void MainWindow::ddaLine(int x1, int y1, int x2, int y2){
     float y=y1;
 
     for(int i=0;i<=steps;i++){
-        image.setPixel(x,y,green);
+        image.setPixel(x,y,color);
         x=x+xinc;
         y=y+yinc;
     }
@@ -86,20 +81,46 @@ void MainWindow::ddaLine(int x1, int y1, int x2, int y2){
     ui->label->show();
 }
 
+void MainWindow::plotPoint(int x, int y)
+{
+    for(int i=-1;i<=1;i++)
+        for(int j=-1;j<=1;j++)
+            image.setPixel(x+i,y+j,white);
+
+    ui->label->setPixmap(QPixmap::fromImage(image));
+    ui->label->show();
+}
+
 void MainWindow::on_verticalSlider_valueChanged(int value)
 {
     r=value;
-
-    ui->label_2->setPixmap(QPixmap::fromImage(pallete));
-    ui->label_2->show();
+    color=qRgb(r,g,b);
+    pallete.fill(color);
+    ui->label_3->setPixmap(QPixmap::fromImage(pallete));
+    ui->label_3->show();
 }
 
 void MainWindow::on_verticalSlider_2_valueChanged(int value)
 {
     g=value;
+    color=qRgb(r,g,b);
+    pallete.fill(color);
+    ui->label_3->setPixmap(QPixmap::fromImage(pallete));
+    ui->label_3->show();
 }
 
 void MainWindow::on_verticalSlider_3_valueChanged(int value)
 {
     b=value;
+    color=qRgb(r,g,b);
+    pallete.fill(color);
+    ui->label_3->setPixmap(QPixmap::fromImage(pallete));
+    ui->label_3->show();
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    image.fill(qRgb(0,0,0));
+    ui->label->setPixmap(QPixmap::fromImage(image));
+    ui->label->show();
 }
