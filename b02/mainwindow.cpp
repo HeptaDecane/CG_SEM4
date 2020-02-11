@@ -7,7 +7,7 @@ QImage image(921,591,QImage::Format_RGB888);
 QImage pallete(71,31,QImage::Format_RGB888);
 QRgb white=qRgb(255,255,255);
 QRgb black=qRgb(0,0,0);
-QRgb boundColor;
+QRgb boundColor;  
 QRgb color=white;
 int i=0,x1,y1,x2,y2,r,g,b;
 int seedX,seedY;
