@@ -142,7 +142,7 @@ int main()
 	// Second Line segment 
 	// P21 = (7, 9), P22 = (11, 4) 
 	cohenSutherlandClip(7, 9, 11, 4); 
-
+x1, int, int, int
 	// Third Line segment 
 	// P31 = (1, 5), P32 = (4, 1) 
 	cohenSutherlandClip(1, 5, 4, 1); 

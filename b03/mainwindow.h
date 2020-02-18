@@ -19,6 +19,9 @@ private slots:
     void mouseReleaseEvent(QMouseEvent *events);
     void drawBox();
     void ddaLine(int,int,int,int);
+    int computeCode(int,int);
+    void cohenSutherlandClip(int);
+
 
     void on_pushButton_clicked();
 
