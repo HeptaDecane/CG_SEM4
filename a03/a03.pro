@@ -26,7 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    xmatrix.cpp
+    XMatrix.cpp
 
 HEADERS += \
         mainwindow.h

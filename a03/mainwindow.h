@@ -1,8 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
 #include <QMainWindow>
-
 namespace Ui {
 class MainWindow;
 }
@@ -16,6 +14,13 @@ public:
     ~MainWindow();
     void mousePressEvent(QMouseEvent *events);
     void ddaLine(int,int,int,int);
+    void initCentroid();
+    void coordinatesToXMatrix();
+    void XMatrixToCoordinates();
+    void setTranslationMatrix(float,float);
+    void setRotationMatrix(float);
+    void setScalingMatrix(float,float);
+    void drawPolygon();
 
 private slots:
     void on_textEdit_textChanged();
@@ -36,10 +41,15 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_5_clicked();
+
 private:
     Ui::MainWindow *ui;
     int coordinates[100][2];
     int vertices;
+    int gx,gy;
 };
 
 #endif // MAINWINDOW_H
