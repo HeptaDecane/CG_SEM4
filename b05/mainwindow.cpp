@@ -3,7 +3,7 @@
 #include "QtMath"
 #include "iostream"
 using namespace std;
-
+ 
 #define UP 0
 #define LEFT 1
 #define DOWN 2
