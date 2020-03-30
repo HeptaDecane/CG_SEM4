@@ -15,6 +15,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     void drawGrid();
     void drawStroke(int);
+    void hilbertCurve(int,int);
     ~MainWindow();
 
 private slots:

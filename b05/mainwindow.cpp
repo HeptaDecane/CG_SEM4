@@ -18,8 +18,7 @@ QRgb white=qRgb(255,255,255);
 
 QImage image(941,691,QImage::Format_RGB888);
 
-int startX=0.75*670+135;
-int startY=0.75*670+10;
+int startX,startY;
 
 /************************************/
 
@@ -29,8 +28,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     image.fill(white);
-    current=new QPoint(startX,startY);
     level=1;
+    direction=DOWN;
     strokeSize=ceil(670/pow(2,level));
     ui->label->setPixmap(QPixmap::fromImage(image));
     ui->label->show();
@@ -60,7 +59,7 @@ void MainWindow::drawGrid()
             |                       |
             |                       |
             *-----------------------*
-        (135,690)               (805,690)
+        (135,680)               (805,680)
      */
 }
 
@@ -68,23 +67,23 @@ void MainWindow::drawStroke(int direction)
 {
     int x=current->x();
     int y=current->y();
-    cout<<x<<" "<<y<<"\n";
+
     switch (direction) {
     case UP:
         for(int i=0;i<strokeSize;i++)
-            image.setPixel(x,y--,red);
+            image.setPixel(x,y--,blue);
         break;
     case LEFT:
         for(int i=0;i<strokeSize;i++)
-            image.setPixel(x--,y,red);
+            image.setPixel(x--,y,blue);
         break;
     case DOWN:
         for(int i=0;i<strokeSize;i++)
-            image.setPixel(x,y++,red);
+            image.setPixel(x,y++,blue);
         break;
     case RIGHT:
         for(int i=0;i<strokeSize;i++)
-            image.setPixel(x++,y,red);
+            image.setPixel(x++,y,blue);
         break;
     default:
         break;
@@ -95,9 +94,75 @@ void MainWindow::drawStroke(int direction)
 
 }
 
+void MainWindow::hilbertCurve(int level, int direction=DOWN)
+{
+    if(level<=1){
+        switch (direction) {
+        case UP:
+            drawStroke(DOWN);
+            drawStroke(RIGHT);
+            drawStroke(UP);
+            break;
+        case LEFT:
+            drawStroke(RIGHT);
+            drawStroke(DOWN);
+            drawStroke(LEFT);
+            break;
+        case DOWN:
+            drawStroke(UP);
+            drawStroke(LEFT);
+            drawStroke(DOWN);
+            break;
+        case RIGHT:
+            drawStroke(LEFT);
+            drawStroke(UP);
+            drawStroke(RIGHT);
+            break;
+        }
+        return;
+    }
+    switch (direction) {
+    case UP:
+        hilbertCurve(level-1,LEFT);
+        drawStroke(DOWN);
+        hilbertCurve(level-1,UP);
+        drawStroke(RIGHT);
+        hilbertCurve(level-1,UP);
+        drawStroke(UP);
+        hilbertCurve(level-1,RIGHT);
+        break;
+    case LEFT:
+        hilbertCurve(level-1,UP);
+        drawStroke(RIGHT);
+        hilbertCurve(level-1,LEFT);
+        drawStroke(DOWN);
+        hilbertCurve(level-1,LEFT);
+        drawStroke(LEFT);
+        hilbertCurve(level-1,DOWN);
+        break;
+    case DOWN:
+        hilbertCurve(level-1,RIGHT);
+        drawStroke(UP);
+        hilbertCurve(level-1,DOWN);
+        drawStroke(LEFT);
+        hilbertCurve(level-1,DOWN);
+        drawStroke(DOWN);
+        hilbertCurve(level-1,LEFT);
+        break;
+    case RIGHT:
+        hilbertCurve(level-1,DOWN);
+        drawStroke(LEFT);
+        hilbertCurve(level-1,RIGHT);
+        drawStroke(UP);
+        hilbertCurve(level-1,RIGHT);
+        drawStroke(RIGHT);
+        hilbertCurve(level-1,UP);
+        break;
+    }
+}
+
 MainWindow::~MainWindow()
 {
-
     delete ui;
 }
 
@@ -134,13 +199,25 @@ void MainWindow::on_radioButton_4_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
+    on_pushButton_2_clicked();      //clear
+
     drawGrid();
-    drawStroke(UP);
-    drawStroke(LEFT);
-    drawStroke(DOWN);
+    if(direction==DOWN||direction==RIGHT){
+        startX=805-(strokeSize/2);
+        startY=680-(strokeSize/2);
+        current=new QPoint(startX,startY);
+    }
+    else{
+        startX=135+(strokeSize/2);
+        startY=10+(strokeSize/2);
+        current=new QPoint(startX,startY);
+    }
+    hilbertCurve(level,direction);
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_pushButton_2_clicked()      //clear
 {
-
+    image.fill(white);
+    ui->label->setPixmap(QPixmap::fromImage(image));
+    ui->label->show();
 }
